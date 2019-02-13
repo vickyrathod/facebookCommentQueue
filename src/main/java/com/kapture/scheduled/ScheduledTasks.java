@@ -35,15 +35,28 @@ public class ScheduledTasks {
 	
     @Scheduled(fixedRate = 10000)
     public void uploadToKapture() {
+    	
+    	ResponseEntity<Integer> timeStampResponse;
+    	
+    	Integer timestamp;
+    	
     	List<RequstData> dataList = mRepository.findAll();
+    	
+    	//getting timestamp
+    	
+    	timeStampResponse = restTemplate.getForEntity(url + "/gettime",Integer.class);
+    	
+    	if(HttpStatus.OK.equals(timeStampResponse.getStatusCode())) {
+    		timestamp = timeStampResponse.getBody().intValue();
+    	} else {
+    		timestamp = null;
+    	}
     	
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-    	//System.out.println(url+"poonam");
-    	//The body  of the request object
+    	
     	HttpEntity<List<RequstData>> data = new HttpEntity<>(dataList, headers);
-    	//the full request object and restTemplate is the http  client or the browser
-    	ResponseEntity<String> rs = restTemplate.exchange(url,HttpMethod.POST , data, String.class);
+    	ResponseEntity<String> rs = restTemplate.exchange(url + "/postdata", HttpMethod.POST , data, String.class);
     	
     	if(rs.getStatusCode().equals(HttpStatus.OK)) {
     		mRepository.deleteAll(dataList);
