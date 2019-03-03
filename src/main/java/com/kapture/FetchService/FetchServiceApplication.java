@@ -1,17 +1,13 @@
 package com.kapture.FetchService;
 
-import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.kapture.model.RequstData;
 
 @SpringBootApplication
 @ComponentScan("com.kapture")
@@ -19,8 +15,18 @@ import com.kapture.model.RequstData;
 @EnableMongoRepositories(basePackageClasses = com.kapture.dao.MRepository.class)
 public class FetchServiceApplication {
 
+	private static Logger log = LogManager.getLogger(FetchServiceApplication.class);
+	
 	public static void main(String[] args) {
-		SpringApplication.run(FetchServiceApplication.class, args);
+		
+		SpringApplication app = new SpringApplication(FetchServiceApplication.class);
+		Environment env = app.run(args).getEnvironment();
+		log.info("\n----------------------------------------------------------\n\t" +
+                "Application '{}' is running! Access URLs:\n\t" +
+                "Local: \t\thttp://localhost:{}\n" +
+                "----------------------------------------------------------",
+        env.getProperty("spring.application.name"),
+        env.getProperty("server.port"));
 	}
 }
 
