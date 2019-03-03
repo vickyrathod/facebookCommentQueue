@@ -18,7 +18,7 @@ public class MainController {
 	
 	private static Logger log = LogManager.getLogger(MainController.class);
 	
-	 @PostMapping(ServiceConstants.FACEBOOK_URL_MAPPING)
+	 @PostMapping("facebook")
 	 ResponseEntity<String> addData( @RequestBody String data){
 		 log.info("got data of reuest : {}", data);
 		 
@@ -26,7 +26,7 @@ public class MainController {
 		 return ResponseEntity.ok().body(null);
 	 }
 	 
-	 @GetMapping(ServiceConstants.FACEBOOK_URL_MAPPING)
+	 @GetMapping("facebook")
 	 ResponseEntity<String> verifyService( @RequestParam(ServiceConstants.FACEBOOK_VERIFICATION_PARAM) String code){
 		
 		 return ResponseEntity.ok().body(code);

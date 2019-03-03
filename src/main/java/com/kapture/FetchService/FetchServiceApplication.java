@@ -6,11 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan("com.kapture")
-@EnableScheduling
 public class FetchServiceApplication {
 
 	private static Logger log = LogManager.getLogger(FetchServiceApplication.class);
